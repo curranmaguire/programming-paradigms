@@ -4,20 +4,23 @@
 CC=gcc
 #define the flags to be used when compiling -c is so the compiler doesn't compile main straight away -wall raises compiler errors fully
 #-werror stops the compilation at an error and -i. makes sure libraries are being defined
-CFLAGS=-c -Wall -Werror -I.
-LDFLAGS=-lncursesw
-SOURCES=main.c langton.c visualiser.c
-OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLE=myprogram
+CFLAGS = -Wall -I. -fPIC
+LDFLAGS = -shared
 
-all: $(SOURCES) $(EXECUTABLE)
+OBJECTS = visualiser.o langton.o
 
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+libant.so: $(OBJECTS)
+	$(CC) $(LDFLAGS) -o $@ $^
 
-.c.o:
-	$(CC) $(CFLAGS) $< -o $@
+%.o: %.c %.h
+	$(CC) $(CFLAGS) -c -o $@ $<
 
+ant: libant.so main.c
+	$(CC) -L. -lant -o $@ main.c
+
+.PHONY: clean
 clean:
-	rm -rf $(OBJECTS) $(EXECUTABLE)
+	rm -f $(OBJECTS) libant.so ant
+
+
 #run make clean to remove any executables on a failed compilation
