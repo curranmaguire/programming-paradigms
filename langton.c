@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <langton.h>
+#include "langton.h"
 
 void turn_left(struct ant *ant){
 
