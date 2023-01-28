@@ -5,55 +5,56 @@
 
 void turn_left(struct ant *ant)
 {
-    // check for all direections and change them to the right version
-    if (ant->direction == UP)
+    switch (ant->direction)
     {
+    case UP:
         ant->direction = LEFT;
-    }
-    if (ant->direction == LEFT)
-    {
+        break;
+    case LEFT:
         ant->direction = DOWN;
-    }
-    if (ant->direction == DOWN)
-    {
+        break;
+    case DOWN:
         ant->direction = RIGHT;
-    }
-    else
-    {
+        break;
+    case RIGHT:
         ant->direction = UP;
+        break;
+    default:
+        break;
     }
-};
+}
+
 void turn_right(struct ant *ant)
 {
-    if (ant->direction == UP)
+    switch (ant->direction)
     {
+    case UP:
         ant->direction = RIGHT;
-    }
-    if (ant->direction == RIGHT)
-    {
+        break;
+    case RIGHT:
         ant->direction = DOWN;
-    }
-    if (ant->direction == DOWN)
-    {
+        break;
+    case DOWN:
         ant->direction = LEFT;
-    }
-    else
-    {
+        break;
+    case LEFT:
         ant->direction = UP;
+        break;
+    default:
+        break;
     }
 };
 void move_forward(struct ant *ant)
 {
-    if (ant->direction == UP)
-    { // check if we have gone past the screens bounds.
-        // we don't need to do an else statement as the ++ assigns the y+1 value already
+    switch (ant->direction)
+    {
+    case UP:
         if (ant->y++ > getmaxy(stdscr))
         {
             ant->y = 0;
         }
-    }
-    if (ant->direction == DOWN)
-    { // to avoid the int going negative we have checked before the --
+        break;
+    case DOWN:
         if (ant->y == 0)
         {
             ant->y = getmaxy(stdscr);
@@ -62,16 +63,15 @@ void move_forward(struct ant *ant)
         {
             ant->y--;
         }
-    }
-    if (ant->direction == RIGHT)
-    {
+        break;
+    case RIGHT:
         if (ant->x++ > getmaxx(stdscr))
         {
             ant->x = 0;
         };
-    }
-    else
-    {
+        break;
+
+    case LEFT:
         if (ant->x == 0)
         {
             ant->x = getmaxx(stdscr);
@@ -80,21 +80,26 @@ void move_forward(struct ant *ant)
         {
             ant->x--;
         }
+        break;
+    default:
+        break;
     }
 };
 
 void apply_rule(enum colour *colour, struct ant *ant)
 {
-
-    if (*colour == WHITE)
+    switch (*colour)
     {
+    case WHITE:
         turn_right(ant);
         // change the colour of the cells
+        break;
+    case BLACK:
+        turn_right(ant);
+        // change the colour of the cells
+        break;
+    default:
+        break;
     }
-    if (*colour == BLACK)
-    {
-        turn_right(ant);
-        // change the colour of the cells
-    } // make a warning ifthe colour passed is a null pointer or doesn't work
 };
 void apply_rule_general(enum colour *colour, struct ant *ant, struct rule *rule){};
