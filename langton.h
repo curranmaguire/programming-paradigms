@@ -21,7 +21,7 @@ struct rule
     char *rules;
 };
 
-#define ant_is_at(x, y) (x == antPointer->x && y == antPointer->y ? 1 : 0)
+#define ant_is_at(x, y) (x == ant->x && y == ant->y ? 1 : 0)
 
 enum colour
 {

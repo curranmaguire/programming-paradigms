@@ -1,45 +1,31 @@
 #include <stdio.h>
+#include "langton.h"
+#include "visualiser.h"
 
+#include <curses.h>
 #include <ncurses.h>
 
 int main(void)
 {
-    initscr();
-    noecho();
-    cbreak(); // starting the window for ncurses
+    // initialize ant and start the visualisation
+    struct ant __ant = {};
+    struct ant *ant = &__ant;
+    start_visualisation(ant);
 
-    // get the screen size
-    int xMax, yMax;
-    getmaxyx(stdscr, yMax, xMax);
-
-    // create a window for our input
-    WINDOW *inputwin = newwin(3, xMax - 12, yMax - 5, 5);
-    box(inputwin, 0, 0);
-    refresh();
-    wrefresh(inputwin);
     // main langton loop
     while (1)
     {
-
-        int c = wgetch(inputwin);
-        if (c == 'q')
+        if (not_quit())
         {
-            // input of q exit the simualtion
-            mvwprintw(inputwin, 1, 1, " you pressed q");
-            wrefresh(inputwin);
-            endwin();
-            break;
+            // input of not q continue the simualtion
+            visualise_and_advance(ant);
         }
         else
         {
-            // input of not q so move to next instance
-            mvwprintw(inputwin, 1, 1, " you pressed a key");
-            wrefresh(inputwin);
+            // input of q so stop
+            end_visualisation();
         }
     }
 
-    // make sure program waits before exiting
-    getch();
-    endwin();
     // ncurses ends
 }

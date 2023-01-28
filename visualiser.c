@@ -2,9 +2,10 @@
 #include <locale.h>
 #include <stdlib.h>
 #include "visualiser.h"
-
 #define cell_under_ant cell_at(ant->y, ant->x)
 cell *cells;
+// this goes to the position in the array of cells assigned by calloc and returns that cell
+#define cell_at(x, y) (cells[y * getmaxx(stdscr) + x])
 
 void start_visualisation(struct ant *ant)
 {
