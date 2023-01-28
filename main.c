@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "langton.h"
 #include "visualiser.h"
 
@@ -8,8 +9,8 @@
 int main(void)
 {
     // initialize ant and start the visualisation
-    struct ant STRant = {};
-    struct ant *ant = &STRant;
+
+    struct ant *ant = (struct ant *)malloc(sizeof(struct ant));
     start_visualisation(ant);
 
     // main langton loop
@@ -26,6 +27,6 @@ int main(void)
             end_visualisation();
         }
     }
-
+    free(ant);
     // ncurses ends
 }
