@@ -8,8 +8,8 @@
 int main(void)
 {
     // initialize ant and start the visualisation
-    struct ant __ant = {};
-    struct ant *ant = &__ant;
+    struct ant STRant = {};
+    struct ant *ant = &STRant;
     start_visualisation(ant);
 
     // main langton loop
@@ -18,7 +18,7 @@ int main(void)
         if (not_quit())
         {
             // input of not q continue the simualtion
-            visualise_and_advance(ant);
+            // visualise_and_advance(ant);
         }
         else
         {
