@@ -9,8 +9,8 @@
 int main(void)
 {
     // initialize ant and start the visualisation
-
     struct ant *ant = (struct ant *)malloc(sizeof(struct ant));
+
     start_visualisation(ant);
 
     // main langton loop
@@ -19,12 +19,13 @@ int main(void)
         if (not_quit())
         {
             // input of not q continue the simualtion
-            // visualise_and_advance(ant);
+            visualise_and_advance(ant);
         }
         else
         {
             // input of q so stop
             end_visualisation();
+            break;
         }
     }
     free(ant);
