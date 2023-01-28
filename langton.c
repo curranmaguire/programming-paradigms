@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "langton.h"
 #include <ncurses.h>
-
 void turn_left(struct ant *ant)
 {
     switch (ant->direction)
@@ -48,13 +47,13 @@ void move_forward(struct ant *ant)
 {
     switch (ant->direction)
     {
-    case UP:
-        if (ant->y++ > getmaxy(stdscr))
+    case DOWN:
+        if (ant->y++ >= getmaxy(stdscr))
         {
             ant->y = 0;
         }
         break;
-    case DOWN:
+    case UP:
         if (ant->y == 0)
         {
             ant->y = getmaxy(stdscr);
@@ -91,15 +90,18 @@ void apply_rule(enum colour *colour, struct ant *ant)
     switch (*colour)
     {
     case WHITE:
-        turn_right(ant);
-        // change the colour of the cells
+        turn_left(ant);
+        *colour = BLACK;
         break;
     case BLACK:
         turn_right(ant);
-        // change the colour of the cells
+        *colour = WHITE;
         break;
     default:
         break;
     }
 };
-void apply_rule_general(enum colour *colour, struct ant *ant, struct rule *rule){};
+void apply_rule_general(enum colour *colour, struct ant *ant, struct rule *rule){
+    /*match correspondding colour to rule execute turn*/
+
+};

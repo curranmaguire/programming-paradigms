@@ -1,29 +1,19 @@
-#makefile for the coursework it will feature the files visualiser.c and .h and langton.c and .h as well as main.c
-
-#define the compiler
-#define the flags to be used when compiling -c is so the compiler doesn't compile main straight away -wall raises compiler errors fully
-#-werror stops the compilation at an error and -i. makes sure libraries are being defined
 CC = gcc
-CFLAGS = -c -Wall -fPIC
-LDFLAGS = -shared
+CFLAGS = -c -Wall
+LDFLAGS = -lncurses
 
-SOURCES = langton.c visualiser.c main.c
+SOURCES = langton.c visualiser.c
 OBJECTS = $(SOURCES:.c=.o)
 
 all: $(SOURCES) ant
 
-ant: $(OBJECTS) main.c libant.so
-	$(CC) -o ant main.o -L. -lant $(LDFLAGS)
-
-
-libant.so: $(OBJECTS)
-	$(CC)  $(LDFLAGS)  $(OBJECTS) -lncursesw -o libant.so
+ant: $(OBJECTS) main.c
+	$(CC) -o ant main.c $(OBJECTS) $(LDFLAGS)
 
 .c.o:
-	$(CC) $(CFLAGS)  $< -o $@ 
+	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -rf $(OBJECTS) ant libant.so
-
+	rm -rf $(OBJECTS) ant
 
 #run make clean to remove any executables on a failed compilation
