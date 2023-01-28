@@ -74,7 +74,7 @@ void move_forward(struct ant *ant)
     {
         if (ant->x == 0)
         {
-            ant->x == getmaxx(stdscr);
+            ant->x = getmaxx(stdscr);
         }
         else
         {

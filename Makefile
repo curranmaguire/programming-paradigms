@@ -17,7 +17,7 @@ ant: $(OBJECTS) main.c libant.so
 
 
 libant.so: $(OBJECTS)
-	$(CC)  $(LDFLAGS)  $(OBJECTS) -L/opt/homebrew/opt/ncurses/lib -lncurses -o libant.so
+	$(CC)  $(LDFLAGS)  $(OBJECTS) -lncursesw -o libant.so
 
 .c.o:
 	$(CC) $(CFLAGS)  $< -o $@ 
