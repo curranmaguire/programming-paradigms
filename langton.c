@@ -4,6 +4,7 @@
 #include <ncurses.h>
 void turn_left(struct ant *ant)
 {
+    // this is used on a white square
     switch (ant->direction)
     {
     case UP:
@@ -25,6 +26,7 @@ void turn_left(struct ant *ant)
 
 void turn_right(struct ant *ant)
 {
+    // this is used for the black colour
     switch (ant->direction)
     {
     case UP:
@@ -100,8 +102,4 @@ void apply_rule(enum colour *colour, struct ant *ant)
     default:
         break;
     }
-};
-void apply_rule_general(enum colour *colour, struct ant *ant, struct rule *rule){
-    /*match correspondding colour to rule execute turn*/
-
 };

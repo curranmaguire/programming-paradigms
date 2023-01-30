@@ -31,14 +31,14 @@ void visualise_and_advance(struct ant *ant)
          mvprintw(y, x,
                   ant_is_at(y, x)
                       ? direction_to_s(ant->direction)
-                  : cell_at(y, x)
+                  : cell_at_fct(y, x)
                       ? "#"
                       : " ");
       }
    }
    refresh();
 
-   /* Advance to next step */
+   /* Advance to next step */ // potenrtially move this out of the function to differentiate between the states
    apply_rule(&cell_under_ant, ant);
    move_forward(ant);
 }
@@ -61,4 +61,10 @@ const char *direction_to_s(enum direction d)
                       : LEFT == d   ? "<"
                                     :
                                   /* else */ ">";
+}
+
+cell cell_at_fct(int y, int x)
+{ // write this to return the character omn to the screen where the cell with have a stored colour
+   cell cell = cell_at(y, x);
+   return cell;
 }
