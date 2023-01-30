@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "langton.h"
 #include "visualiser.h"
-
+#include <string.h>
 #include <curses.h>
 #include <ncurses.h>
 
@@ -32,15 +32,11 @@ void basic_ant(void)
     // ncurses ends
 };
 
-void n_state_ant(char *argv)
+void n_state_ant(struct rule *rule)
 {
-    printf("n state worked");
+
     // initialize ant and create memory for it.
     struct ant *ant = malloc(sizeof(struct ant));
-    // creating the rule struct and assigning memory
-    struct rule *rule = malloc(sizeof(struct rule));
-    rule->rules = argv;
-    printf("%c", *(rule->rules));
 
     //  start visualisation
     start_visualisation(ant);
@@ -70,11 +66,13 @@ int main(int argc, char *argv[])
     if (argc > 2)
     {
         printf("too many arguments input a rule of e.g. LRR ");
+        exit(0);
     }
     else if (argc == 2)
     { // run the n state ant
-        printf("n-state has triggered");
-        n_state_ant(argv[1]);
+        struct rule *rule = malloc(sizeof(struct rule) + sizeof(strlen(argv[1]) + 1));
+        rule->rules = argv[1];
+        n_state_ant(rule);
     }
     else if (argc < 2)
     { // run the basic state ant
