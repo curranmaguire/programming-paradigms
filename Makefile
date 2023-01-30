@@ -6,12 +6,14 @@ SOURCES = langton.c visualiser.c
 OBJECTS = $(SOURCES:.c=.o)
 
 all: $(SOURCES) ant
-
+	./ant
 ant: $(OBJECTS) main.c
 	$(CC) -o ant main.c $(OBJECTS) $(LDFLAGS)
 
 .c.o:
 	$(CC) $(CFLAGS) $< -o $@
+
+.PHONY: clean
 
 clean:
 	rm -rf $(OBJECTS) ant
