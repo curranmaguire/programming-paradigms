@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include "visualiser.h"
 #define cell_under_ant cell_at(ant->y, ant->x)
-cell *cells;
+cell2 *cells;
+extern struct rule *rule;
 // this goes to the position in the array of cells assigned by calloc and returns that cell
 #define cell_at(x, y) (cells[y * getmaxx(stdscr) + x])
 
@@ -15,10 +16,102 @@ void start_visualisation(struct ant *ant)
    curs_set(FALSE);
    max_x = getmaxx(stdscr);
    max_y = getmaxy(stdscr);
-   cells = calloc(max_y * max_x, sizeof(cell));
+   cells = calloc(max_y * max_x, sizeof(cell2));
    ant->x = max_x / 2;
    ant->y = max_y / 2;
    ant->direction = RIGHT;
+}
+
+// return a char from a cell so it can be printed
+char *print_cell(cell2 cell)
+{
+   switch (cell)
+   {
+   case 0:
+      return " ";
+      break;
+
+   case 1:
+      return "b";
+      break;
+   case 2:
+      return "c";
+      break;
+   case 3:
+      return "d";
+      break;
+   case 4:
+      return "e";
+      break;
+   case 5:
+      return "f";
+      break;
+   case 6:
+      return "g";
+      break;
+   case 7:
+      return "h";
+      break;
+   case 8:
+      return "i";
+      break;
+   case 9:
+      return "j";
+      break;
+   case 10:
+      return "k";
+      break;
+   case 11:
+      return "l";
+      break;
+   case 12:
+      return "m";
+      break;
+   case 13:
+      return "n";
+      break;
+   case 14:
+      return "o";
+      break;
+   case 15:
+      return "p";
+      break;
+   case 16:
+      return "q";
+      break;
+   case 17:
+      return "r";
+      break;
+   case 18:
+      return "s";
+      break;
+   case 19:
+      return "t";
+      break;
+   case 20:
+      return "u";
+      break;
+   case 21:
+      return "v";
+      break;
+   case 22:
+      return "w";
+      break;
+   case 23:
+      return "x";
+      break;
+   case 24:
+      return "y";
+      break;
+   case 25:
+      return "z";
+      break;
+   case 26:
+      return "a";
+      break;
+   default:
+      break;
+   }
 }
 
 void visualise_and_advance(struct ant *ant)
@@ -31,15 +124,13 @@ void visualise_and_advance(struct ant *ant)
          mvprintw(y, x,
                   ant_is_at(y, x)
                       ? direction_to_s(ant->direction)
-                  : cell_at_fct(y, x)
-                      ? "#"
-                      : " ");
+                      : print_cell(cell_at(y, x)));
       }
    }
    refresh();
 
-   /* Advance to next step */ // potenrtially move this out of the function to differentiate between the states
-   apply_rule(&cell_under_ant, ant);
+   /* Advance to next step */
+   apply_rule_general(&cell_under_ant, ant, rule);
    move_forward(ant);
 }
 
@@ -61,10 +152,4 @@ const char *direction_to_s(enum direction d)
                       : LEFT == d   ? "<"
                                     :
                                   /* else */ ">";
-}
-
-cell cell_at_fct(int y, int x)
-{ // write this to return the character omn to the screen where the cell with have a stored colour
-   cell cell = cell_at(y, x);
-   return cell;
 }

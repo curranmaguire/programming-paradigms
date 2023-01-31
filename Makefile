@@ -5,10 +5,14 @@ LDFLAGS = -lncurses
 SOURCES = langton.c visualiser.c
 OBJECTS = $(SOURCES:.c=.o)
 
-all: $(SOURCES) ant
-	./ant
+all: $(SOURCES) ant library
+	./ant 
+	
 ant: $(OBJECTS) main.c
 	$(CC) -o ant main.c $(OBJECTS) $(LDFLAGS)
+
+library: $(OBJECTS)
+	$(CC) -o libant.so $(OBJECTS) -shared $(CFLAGS)
 
 .c.o:
 	$(CC) $(CFLAGS) $< -o $@

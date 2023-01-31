@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include "langton.h"
 #include <ncurses.h>
+#include <string.h>
+
+extern int length_rule;
+
 void turn_left(struct ant *ant)
 {
     // this is used on a white square
@@ -103,3 +107,17 @@ void apply_rule(enum colour *colour, struct ant *ant)
         break;
     }
 };
+void apply_rule_general(enum colour2 *colour, struct ant *ant, struct rule *rule)
+{
+
+    int temp = (int)*colour;
+    if (rule->rules[temp] == 'L')
+    {
+        turn_left(ant);
+    }
+    else // R is provided
+    {
+        turn_right(ant);
+    }
+    *colour = (1 + temp) % length_rule;
+}
